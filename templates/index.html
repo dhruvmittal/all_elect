@@ -1,15 +1,267 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>Hello, World!</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	</head>
-	<body>
-		<div>
-  			<h1>Hello, World!</h1>
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>All_Elect</title>
+  <meta name="description" content="">
+  <meta name="author" content="Dhruv Mittal">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <!--<link rel="stylesheet" href="/static/css/normalize.css">-->
+  <!--<link rel="stylesheet" href="/static/css/skeleton.css">-->
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/skeleton.css') }}">
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/normalize.css') }}">
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/custom.css') }}">
+
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+  <div class="container">
+	  <section class="header">
+		  <h2 class="title">All_Elect</h2>
+		  <h1>Your simple portal into US elections polling.</h1>
+	  </section>
+  </div>
+  <a id="intro" />
+  	<div class="navbar-spacer" style="margin-top: 10%"></div>
+	<nav class="navbar">
+		<div class="container">	
+			<ul class="navbar-list">
+				<li class="navbar-item">
+				<a class="navbar-link" href="#intro"><u>Intro</u></a>
+				</li>
+				<li class="navbar-item">
+					<a class="navbar-link" href="#eda">EDA</a>
+				</li>
+				<li class="navbar-item">
+					<a class="navbar-link" href="#ranking">Rankings</a>
+				</li>
+				<li class="navbar-item">
+					<a class="navbar-link" href="#forecast">Forecast Explorer</a>
+				</li>
+			</ul>
+		</dv>
+	</nav>
+	</div>
+
+
+	<div class="section hero" >
+		<div class="container" style="margin-top: 2%">
+			<p> Once again, you find yourself smack-dab in the middle of a US 
+			election cycle (with a presidential election cycle on the order of 600 
+			days, it's almost as likely as not), and all sorts of people are
+			saying all sorts of things about what "the people" think.</p>
+
+			<p> <i>These are veteran pollsters</i>, you think as you refresh
+			<a href="http://www.realclearpolitics.com/">RealClear Politics</a> 
+			for the seventh time this morning. 
+			<i>I should be able to trust them</i>.</p>
+	       
+			<p>But why, then, do none of them seem to agree with each other?
+			How do you know who to believe? 
+			</p>
+
+
+			<p> "Polling is an art," they say, but that doesn't seem quite right 
+			to you. It's 2016 and you see no reason not to put your modern 
+			number-crunching know-how to work analysing pollsters.</p>
 		</div>
-	</body>
+
+
+
+		<!--</div>-->
+		<div class="container">
+			<div class="row">
+				<div class="one-third column">
+					<p>
+					You read a quote from a guy who sounds like he knows
+					what he's talking about.
+					</p>
+
+					<p>
+					You're inspired! This looks like a problem you can tackle!
+					</p>
+				</div>
+				<div class="two-thirds column" style="margin-top: 5%">
+				<!--<div class="two-thirds column">-->
+					<h5 class="hero-heading">
+						"We think there should be more pollster ratings."
+					</h5>
+						<cite>Nate Silver</cite>
+				</div>
+			</div>
+		</div>
+		<p> 
+	</div>
+
+	  <a id="eda" />
+  	<div class="navbar-spacer"></div>
+	<nav class="navbar">
+		<div class="container">	
+			<ul class="navbar-list">
+				<li class="navbar-item">
+					<a class="navbar-link" href="#intro">Intro</a>
+				</li>
+				<li class="navbar-item">
+					<a class="navbar-link" href="#eda"><u>EDA</u></a>
+				</li>
+				<li class="navbar-item">
+					<a class="navbar-link" href="#ranking">Rankings</a>
+				</li>
+				<li class="navbar-item">
+					<a class="navbar-link" href="#forecast">Forecast Explorer</a>
+				</li>
+			</ul>
+		</dv>
+	</nav>
+	</div>
+
+	<div class="container" style="margin-top: 3%">
+		<div class="row">
+		<p>
+		First, you need to know if pollsters are actually consistent. Can we actually
+		differentiate between pollsters based on some aggregated feature?  </p>
+
+		<p>Accuracy, you suspect, would be a good indicator of a pollster's overall
+	       	performance. After all, if one follows all the "best practices" of the art,
+		one really should get the best results.  </p>
+
+		<p>You rush over to RCP and scrape all their polls on Primaries. You know
+		that the difficulty in polling primaries increases non-linearly the further
+		before the contest date you poll, which suggests that a time-series might
+		contain the interesting information.
+		</p>
+		</div>
+		<div class="row" class="u-max-full-width" >
+			<img class="u-max-full-width" src="/static/images/pollster-agg-acc-vs-delta-time.png" />
+		</div>
+		<div class="row">
+		<p> Nice! Plotting the aggregate accuracy over all accessible primaries of 
+		only the fifteen most prolific pollsters, you see some differentiation. 
+		There's every indication that your game might be the right one to play.
+		</p>
+
+		<p>But even a bad pollster can get lucky. And a bad pollster might have every 
+		incentive to cheat! Thus, accuracy cannot be the end of the story. </p>
+
+		<p>As you brainstorm interesting features, you try to address questions you
+		would actually have about each pollster. You wonder if you can determine whether
+		a pollster has a partisan bias.</p>
+
+		<p> Of course, a lot of polls are taken by manifestly partisan organizations,
+	       	but that shouldn't be your yardstick. After all, even the parties themselves
+		need some unbiased measure of their candidate's performance. </p>
+
+		<p>You pull data on the last three presidential elections and test pollsters
+		results against the mean results for the respective contests.</p>
+
+
+		<div class="row" class="u-max-full-width" >
+			<img class="u-max-full-width" src="/static/images/pollster-vs-avg-bias.png" />
+		</div>
+		
+		<p> Plotting only the most prolific pollsters, you again see reasonable 
+		differentiation (and the reassurance that the bias chart lines up with your
+		intuition). </p>
+		
+	</div>
+</div>
+
+  <a id="ranking" />
+  	<div class="navbar-spacer" style="margin-top: 10%"></div>
+	<nav class="navbar">
+		<div class="container">	
+			<ul class="navbar-list">
+				<li class="navbar-item">
+				<a class="navbar-link" href="#intro">Intro</a>
+				</li>
+				<li class="navbar-item">
+					<a class="navbar-link" href="#eda">EDA</a>
+				</li>
+				<li class="navbar-item">
+					<a class="navbar-link" href="#ranking"><u>Rankings</u></a>
+				</li>
+				<li class="navbar-item">
+					<a class="navbar-link" href="#forecast">Forecast Explorer</a>
+				</li>
+			</ul>
+		</dv>
+	</nav>
+	</div>
+
+<div class="container" style="margin-top:3%">
+	<div class="row">
+		<p> Short story about clustering pollsters with k-means </p>
+		<p> Plots of clusters. I'll be a little sad since I can't
+	       Do it in 4ish dimensions at once.</p>
+	</div>
+	<div class="row">
+		<p> Fantastic table of pollsters, sorted by grade and
+		then by average accuracy</p>
+</div>
+</div>
+
+
+  <a id="forecast" />
+  	<div class="navbar-spacer" style="margin-top: 10%"></div>
+	<nav class="navbar">
+		<div class="container">	
+			<ul class="navbar-list">
+				<li class="navbar-item">
+				<a class="navbar-link" href="#intro">Intro</a>
+				</li>
+				<li class="navbar-item">
+					<a class="navbar-link" href="#eda">EDA</a>
+				</li>
+				<li class="navbar-item">
+					<a class="navbar-link" href="#ranking">Rankings</a>
+				</li>
+				<li class="navbar-item">
+					<a class="navbar-link" href="#forecast"><u>Forecast Explorer</u></a>
+				</li>
+			</ul>
+		</dv>
+	</nav>
+	</div>
+
+<div class="container" style="margin-top:3%">
+	<div class="row">
+		<p> Bokeh application that connects to some stuff</p>
+		<p>ARIMA, time series, forecasting, etc. This is where all the
+		coding really lies.</p>
+	</div>
+<!--
+  <div class="container">
+    <div class="row">
+      <div class="one-half column" style="margin-top: 25%">
+        <h4>Basic Page</h4>
+        <p>This index.html page is a placeholder with the CSS, font and favicon. It's just waiting for you to add some content! If you need some help hit up the <a href="http://www.getskeleton.com">Skeleton documentation</a>.</p>
+      </div>
+    </div>
+  </div>
+-->
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
 </html>
