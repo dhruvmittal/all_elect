@@ -15,7 +15,7 @@
 
   <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=Raleway:,600" rel="stylesheet" type="text/css">
 
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -152,9 +152,17 @@
 		contain the interesting information.
 		</p>
 		</div>
-		<div class="row" class="u-max-full-width" >
-			<img class="u-max-full-width" src="/static/images/pollster-agg-acc-vs-delta-time.png" />
+		<!--<div class="row" class="u-max-full-width" >-->
+			<!--<img class="u-max-full-width" src="/static/images/pollster-agg-acc-vs-delta-time.png" />-->
+		<!--</div>-->
+
+		<div>
+		<a href="https://plot.ly/~dhruvmittal/21/" target="_blank" title="Pollster Aggregate Accuracy vs. Time before Primary (RCP ,2016 primaries)" style="display: block; text-align: center;"><img src="https://plot.ly/~dhruvmittal/21.png" alt="Pollster Aggregate Accuracy vs. Time before Primary (RCP 2008,20012,2016 primaries)" style="max-width: 100%;width: 756px;"  width="756" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
+		<script data-plotly="dhruvmittal:21"  src="https://plot.ly/embed.js" async></script>
 		</div>
+
+
+
 		<div class="row">
 		<p> Nice! Plotting the aggregate accuracy over all accessible primaries of 
 		only the fifteen most prolific pollsters, you see some differentiation. 
@@ -176,6 +184,7 @@
 		results against the mean results for the respective contests.</p>
 
 
+
 		<div class="row" class="u-max-full-width" >
 			<img class="u-max-full-width" src="/static/images/pollster-vs-avg-bias.png" />
 		</div>
@@ -183,7 +192,27 @@
 		<p> Plotting only the most prolific pollsters, you again see reasonable 
 		differentiation (and the reassurance that the bias chart lines up with your
 		intuition). </p>
-		
+
+		<p> But really, you need more data. You find a 
+			<a href='https://github.com/fivethirtyeight/data/blob/master/pollster-ratings/pollster-ratings.csv'> database of polls on complete contests available for download from FiveThirtyEight</a>.
+		A few quick analyses suggest to you that the same sorts of statistics 
+		are manifest within this set as well, lending credence to the idea that
+		they well describe the true statistics of the problem. </p>
+
+		<div>
+		<a href="https://plot.ly/~dhruvmittal/0/" target="_blank" title="" style="display: block; text-align: center;"><img src="https://plot.ly/~dhruvmittal/0.png" alt="" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
+		<script data-plotly="dhruvmittal:0"  src="https://plot.ly/embed.js" async></script>
+		</div>
+		<div>
+	    	<a href="https://plot.ly/~dhruvmittal/4/" target="_blank" title="Number Pollsters by Mean Points Bias" style="display: block; text-align: center;"><img src="https://plot.ly/~dhruvmittal/4.png" alt="Number Pollsters by Mean Points Bias" style="max-width: 100%;width: 1620px;"  width="1620" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
+		<script data-plotly="dhruvmittal:4"  src="https://plot.ly/embed.js" async></script>
+		</div>
+
+
+
+
+
+
 	</div>
 </div>
 
@@ -211,15 +240,974 @@
 
 <div class="container" style="margin-top:3%">
 	<div class="row">
-		<p> Short story about clustering pollsters with k-means </p>
-		<p> Plots of clusters. I'll be a little sad since I can't
-	       Do it in 4ish dimensions at once.</p>
+		<p> You try to cluster pollsters into groups with similar performace based on
+		these sorts of features. KMeans is your friend here, but you don't like the
+		built-in version very much. You implement it in TensorFlow.</p>
+		<p> Though you cluster in a higher-dimensional featurespace, you find
+		yourself with the disadvantage of only being able to comprehend three spacial 
+		dimensions at a time. Projecting down onto a subset of your featurespace, you
+		can visualize the clustering reasonably well.  </p>
 	</div>
-	<div class="row">
-		<p> Fantastic table of pollsters, sorted by grade and
-		then by average accuracy</p>
+	<div>
+	<a href="https://plot.ly/~dhruvmittal/25/" target="_blank" title="Error vs. Bias vs. Accuracy" style="display: block; text-align: center;"><img src="https://plot.ly/~dhruvmittal/25.png" alt="Error vs. Bias vs. Accuracy" style="max-width: 100%;width: 1620px;" width="1620" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
+	<script data-plotly="dhruvmittal:25"  src="https://plot.ly/embed.js" async></script>
+	</div>
+	<!--<div>-->
+	<!--<a href="https://plot.ly/~dhruvmittal/19/" target="_blank" title="Accuracy v Size v Bias" style="display: block; text-align: center;"><img src="https://plot.ly/~dhruvmittal/19.png" alt="Accuracy v Size v Bias" style="max-width: 100%;width: 1620px;"  width="1620" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>-->
+	<!--<script data-plotly="dhruvmittal:19"  src="https://plot.ly/embed.js" async></script>-->
+	<!--</div>-->
+
+
+<div class="row">
+	<p> You're left with a great big table of Pollsters organized into similar
+	performance categories, using features such as: </p>
+	<ul>
+		<li> 
+		<b>Accuracy:</b> a number between 0 and 1 indicating the proportion
+		of contests for which their polls successfully identified the victor
+		Higher is better.
+		</li>
+		<li>
+		<b>Mean Sample Size:</b> on average, how many people do they poll?
+		Higher is better.
+		</li>
+		<li>
+		<b>Mean Error:</b> How far are they from calling the correct spread
+		between the victor and the first runner up?
+		Lower is better.
+		</li>
+		<li>
+		<b>Mean Reverted Bias:</b> Historical average statistical bias, calculated
+		by reverting to the mean of each contest. Positive 
+		values correspond to Democratic bias; Negative, Republicans. 
+		Closer to zero is better. 
+		</li>
+		<li> Also reported is <b>N</b>, the number of published polls in the
+		538 dataset by this pollster. Note that the pollsters with fewer than
+		20 polls published in the past several years have been excluded from
+		my calculation. 
+		</li>
+		<li> Finally, the <b>grade</b> as assigned by the clustering algorithm.
+		</li>
 </div>
+
+
 </div>
+<table class="u-max-full-width" width=1100px align="center">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pollster</th>
+      <th>Accuracy</th>
+      <th>Sample Size</th>
+      <th>Error</th>
+      <th>Bias</th>
+      <th>N</th>
+      <th>Grade</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Dan Jones &amp; Associates</th>
+      <td>0.97</td>
+      <td>565.91</td>
+      <td>7.89</td>
+      <td>1.82</td>
+      <td>34.00</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>SurveyMonkey</th>
+      <td>0.91</td>
+      <td>813.55</td>
+      <td>11.22</td>
+      <td>0.00</td>
+      <td>11.00</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>Brown University</th>
+      <td>0.83</td>
+      <td>412.00</td>
+      <td>11.39</td>
+      <td>-2.15</td>
+      <td>12.00</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>Mitchell Research &amp; Communications</th>
+      <td>0.70</td>
+      <td>703.98</td>
+      <td>8.18</td>
+      <td>-0.22</td>
+      <td>47.00</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>American Research Group</th>
+      <td>0.75</td>
+      <td>581.84</td>
+      <td>7.59</td>
+      <td>-0.18</td>
+      <td>259.00</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>Roanoke College</th>
+      <td>0.75</td>
+      <td>548.08</td>
+      <td>9.01</td>
+      <td>1.29</td>
+      <td>12.00</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>Trafalgar Group</th>
+      <td>0.92</td>
+      <td>1862.67</td>
+      <td>9.12</td>
+      <td>0.00</td>
+      <td>12.00</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>Overtime Politics</th>
+      <td>0.67</td>
+      <td>396.08</td>
+      <td>9.82</td>
+      <td>0.00</td>
+      <td>12.00</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>Critical Insights</th>
+      <td>0.88</td>
+      <td>411.18</td>
+      <td>8.62</td>
+      <td>0.89</td>
+      <td>17.00</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>Opinion Savvy/InsiderAdvantage</th>
+      <td>0.71</td>
+      <td>620.43</td>
+      <td>7.79</td>
+      <td>1.48</td>
+      <td>105.00</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>Capital Survey Research Center</th>
+      <td>0.36</td>
+      <td>494.36</td>
+      <td>7.76</td>
+      <td>0.57</td>
+      <td>11.00</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>Anzalone Liszt Grove Research</th>
+      <td>0.55</td>
+      <td>463.82</td>
+      <td>7.64</td>
+      <td>5.07</td>
+      <td>11.00</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>Franklin Pierce University</th>
+      <td>0.83</td>
+      <td>581.10</td>
+      <td>6.64</td>
+      <td>4.48</td>
+      <td>21.00</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>Penn Schoen Berland</th>
+      <td>0.67</td>
+      <td>420.78</td>
+      <td>7.59</td>
+      <td>6.74</td>
+      <td>18.00</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>Mellman Group</th>
+      <td>0.79</td>
+      <td>623.81</td>
+      <td>4.85</td>
+      <td>3.98</td>
+      <td>21.00</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>Star Tribune</th>
+      <td>0.46</td>
+      <td>917.46</td>
+      <td>6.32</td>
+      <td>5.50</td>
+      <td>13.00</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>Global Strategy Group</th>
+      <td>0.67</td>
+      <td>529.33</td>
+      <td>7.07</td>
+      <td>4.73</td>
+      <td>21.00</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>Opinion Research Associates</th>
+      <td>0.71</td>
+      <td>483.58</td>
+      <td>7.93</td>
+      <td>6.12</td>
+      <td>12.00</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>SoonerPoll.com</th>
+      <td>0.81</td>
+      <td>619.75</td>
+      <td>8.50</td>
+      <td>6.36</td>
+      <td>16.00</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>Greenberg Quinlan Rosner (Democracy Corps)</th>
+      <td>0.49</td>
+      <td>887.02</td>
+      <td>4.39</td>
+      <td>3.90</td>
+      <td>48.00</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>Landmark Communications</th>
+      <td>0.88</td>
+      <td>1191.92</td>
+      <td>4.91</td>
+      <td>1.39</td>
+      <td>24.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>KRC/Communications Research</th>
+      <td>0.91</td>
+      <td>430.59</td>
+      <td>6.89</td>
+      <td>0.72</td>
+      <td>22.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Garin-Hart-Yang Research Group</th>
+      <td>0.86</td>
+      <td>604.82</td>
+      <td>5.31</td>
+      <td>3.05</td>
+      <td>22.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Fox News/Anderson Robbins Research/Shaw &amp; Company Research</th>
+      <td>0.65</td>
+      <td>809.67</td>
+      <td>6.40</td>
+      <td>1.94</td>
+      <td>24.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>NBC News/Wall Street Journal</th>
+      <td>0.74</td>
+      <td>907.68</td>
+      <td>4.18</td>
+      <td>1.14</td>
+      <td>25.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Susquehanna Polling &amp; Research, Inc.</th>
+      <td>0.79</td>
+      <td>970.24</td>
+      <td>5.26</td>
+      <td>0.14</td>
+      <td>29.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Elway Research</th>
+      <td>0.89</td>
+      <td>433.00</td>
+      <td>3.99</td>
+      <td>1.38</td>
+      <td>18.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Fairleigh Dickinson University (PublicMind)</th>
+      <td>0.94</td>
+      <td>628.28</td>
+      <td>4.08</td>
+      <td>0.13</td>
+      <td>18.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Columbus Dispatch</th>
+      <td>0.97</td>
+      <td>2003.17</td>
+      <td>4.93</td>
+      <td>3.45</td>
+      <td>18.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Grove Insight</th>
+      <td>0.90</td>
+      <td>482.76</td>
+      <td>3.14</td>
+      <td>0.98</td>
+      <td>29.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Pan Atlantic SMS Group</th>
+      <td>0.91</td>
+      <td>343.59</td>
+      <td>6.78</td>
+      <td>2.75</td>
+      <td>17.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Rutgers University</th>
+      <td>0.85</td>
+      <td>554.31</td>
+      <td>5.68</td>
+      <td>0.32</td>
+      <td>13.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Tel Opinion Research</th>
+      <td>0.96</td>
+      <td>602.58</td>
+      <td>4.71</td>
+      <td>-0.13</td>
+      <td>12.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Davis, Hibbitts &amp; Midghall, Inc.</th>
+      <td>0.83</td>
+      <td>560.67</td>
+      <td>4.27</td>
+      <td>-0.18</td>
+      <td>12.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>St. Norbert College</th>
+      <td>0.88</td>
+      <td>401.75</td>
+      <td>3.87</td>
+      <td>0.94</td>
+      <td>12.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Vox Populi Communications</th>
+      <td>0.77</td>
+      <td>619.82</td>
+      <td>4.05</td>
+      <td>-0.20</td>
+      <td>11.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Pew Research Center</th>
+      <td>0.57</td>
+      <td>1592.30</td>
+      <td>3.42</td>
+      <td>1.39</td>
+      <td>20.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Pharos Research Group</th>
+      <td>0.92</td>
+      <td>787.81</td>
+      <td>4.05</td>
+      <td>1.71</td>
+      <td>31.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>SurveyUSA</th>
+      <td>0.90</td>
+      <td>614.41</td>
+      <td>4.62</td>
+      <td>0.09</td>
+      <td>762.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>CBS News/New York Times</th>
+      <td>0.75</td>
+      <td>728.67</td>
+      <td>4.73</td>
+      <td>1.07</td>
+      <td>55.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>ABC News/Washington Post</th>
+      <td>0.78</td>
+      <td>1233.65</td>
+      <td>3.02</td>
+      <td>0.95</td>
+      <td>51.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Princeton Survey Research Associates International</th>
+      <td>0.69</td>
+      <td>809.84</td>
+      <td>4.63</td>
+      <td>0.51</td>
+      <td>32.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Ipsos</th>
+      <td>0.78</td>
+      <td>940.80</td>
+      <td>4.25</td>
+      <td>0.25</td>
+      <td>49.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>CNN/Opinion Research Corp.</th>
+      <td>0.76</td>
+      <td>640.69</td>
+      <td>5.47</td>
+      <td>-0.16</td>
+      <td>89.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>YouGov</th>
+      <td>0.93</td>
+      <td>618.53</td>
+      <td>6.68</td>
+      <td>1.67</td>
+      <td>706.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Monmouth University</th>
+      <td>0.85</td>
+      <td>605.52</td>
+      <td>5.49</td>
+      <td>1.02</td>
+      <td>71.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Suffolk University</th>
+      <td>0.82</td>
+      <td>503.79</td>
+      <td>5.20</td>
+      <td>1.34</td>
+      <td>67.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>University of New Hampshire</th>
+      <td>0.88</td>
+      <td>546.73</td>
+      <td>5.25</td>
+      <td>2.31</td>
+      <td>93.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Selzer &amp; Company</th>
+      <td>0.84</td>
+      <td>693.68</td>
+      <td>4.62</td>
+      <td>-0.02</td>
+      <td>37.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Research 2000</th>
+      <td>0.88</td>
+      <td>580.89</td>
+      <td>5.54</td>
+      <td>1.56</td>
+      <td>279.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>Public Policy Polling</th>
+      <td>0.82</td>
+      <td>968.04</td>
+      <td>4.92</td>
+      <td>-0.23</td>
+      <td>383.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>RT Strategies</th>
+      <td>0.71</td>
+      <td>990.40</td>
+      <td>5.76</td>
+      <td>1.87</td>
+      <td>42.00</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>ccAdvertising</th>
+      <td>0.88</td>
+      <td>1774.37</td>
+      <td>7.07</td>
+      <td>-5.33</td>
+      <td>30.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Magellan Strategies</th>
+      <td>0.92</td>
+      <td>1150.38</td>
+      <td>7.71</td>
+      <td>-3.08</td>
+      <td>13.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>TCJ Research</th>
+      <td>0.59</td>
+      <td>951.13</td>
+      <td>6.45</td>
+      <td>-5.59</td>
+      <td>133.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>University of Massachusetts Lowell</th>
+      <td>0.93</td>
+      <td>531.79</td>
+      <td>5.26</td>
+      <td>-0.87</td>
+      <td>14.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Ward Research (Honolulu Star-Advertiser)</th>
+      <td>0.75</td>
+      <td>502.71</td>
+      <td>6.00</td>
+      <td>-1.74</td>
+      <td>14.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Fleming &amp; Associates</th>
+      <td>1.00</td>
+      <td>451.60</td>
+      <td>5.08</td>
+      <td>-0.96</td>
+      <td>15.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Strategic Vision, LLC</th>
+      <td>0.88</td>
+      <td>865.61</td>
+      <td>3.98</td>
+      <td>-2.41</td>
+      <td>129.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Harris Interactive</th>
+      <td>0.86</td>
+      <td>5001.05</td>
+      <td>5.49</td>
+      <td>-1.86</td>
+      <td>135.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Quinnipiac University</th>
+      <td>0.87</td>
+      <td>867.93</td>
+      <td>4.66</td>
+      <td>-0.83</td>
+      <td>169.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Marist College</th>
+      <td>0.88</td>
+      <td>641.47</td>
+      <td>5.40</td>
+      <td>-0.91</td>
+      <td>145.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Mason-Dixon Polling &amp; Research, Inc.</th>
+      <td>0.86</td>
+      <td>612.29</td>
+      <td>5.21</td>
+      <td>-1.05</td>
+      <td>415.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Zogby Interactive/JZ Analytics</th>
+      <td>0.78</td>
+      <td>688.46</td>
+      <td>5.62</td>
+      <td>-0.86</td>
+      <td>465.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>National Journal</th>
+      <td>1.00</td>
+      <td>405.25</td>
+      <td>2.60</td>
+      <td>-0.63</td>
+      <td>12.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Rasmussen Reports/Pulse Opinion Research</th>
+      <td>0.79</td>
+      <td>865.51</td>
+      <td>5.30</td>
+      <td>-2.11</td>
+      <td>657.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>University of Massachusetts Amherst</th>
+      <td>1.00</td>
+      <td>400.18</td>
+      <td>6.53</td>
+      <td>-7.16</td>
+      <td>11.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Public Policy Institute of California</th>
+      <td>1.00</td>
+      <td>917.82</td>
+      <td>3.98</td>
+      <td>-3.37</td>
+      <td>11.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Richard Day Research, Inc.</th>
+      <td>1.00</td>
+      <td>671.73</td>
+      <td>5.50</td>
+      <td>-2.87</td>
+      <td>11.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Western New England University</th>
+      <td>0.86</td>
+      <td>466.55</td>
+      <td>5.83</td>
+      <td>-4.61</td>
+      <td>11.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>MassINC Polling Group</th>
+      <td>1.00</td>
+      <td>457.09</td>
+      <td>3.08</td>
+      <td>-0.94</td>
+      <td>11.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Google Consumer Surveys</th>
+      <td>0.83</td>
+      <td>2117.08</td>
+      <td>2.22</td>
+      <td>-2.20</td>
+      <td>12.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>New England College</th>
+      <td>0.77</td>
+      <td>867.47</td>
+      <td>3.02</td>
+      <td>-1.85</td>
+      <td>15.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Gallup</th>
+      <td>0.71</td>
+      <td>1212.56</td>
+      <td>4.27</td>
+      <td>-1.22</td>
+      <td>80.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Ciruli Associates</th>
+      <td>0.94</td>
+      <td>441.24</td>
+      <td>3.60</td>
+      <td>-2.06</td>
+      <td>17.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Angus Reid Global</th>
+      <td>0.93</td>
+      <td>532.59</td>
+      <td>3.27</td>
+      <td>-2.72</td>
+      <td>29.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Fox News/Opinion Dynamics Corp.</th>
+      <td>0.72</td>
+      <td>788.79</td>
+      <td>3.92</td>
+      <td>-0.98</td>
+      <td>34.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>RKM Research and Communications, Inc.</th>
+      <td>0.87</td>
+      <td>509.58</td>
+      <td>5.59</td>
+      <td>-0.55</td>
+      <td>26.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Market Shares Corp.</th>
+      <td>0.85</td>
+      <td>631.35</td>
+      <td>6.78</td>
+      <td>-4.09</td>
+      <td>26.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Research &amp; Polling, Inc.</th>
+      <td>0.85</td>
+      <td>547.42</td>
+      <td>4.14</td>
+      <td>-1.47</td>
+      <td>26.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Emerson College</th>
+      <td>0.84</td>
+      <td>453.24</td>
+      <td>7.88</td>
+      <td>-7.06</td>
+      <td>34.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Field Research Corporation (Field Poll)</th>
+      <td>1.00</td>
+      <td>845.79</td>
+      <td>3.81</td>
+      <td>-3.03</td>
+      <td>24.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>University of Cincinnati (Ohio Poll)</th>
+      <td>0.93</td>
+      <td>789.05</td>
+      <td>3.73</td>
+      <td>-2.96</td>
+      <td>38.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Los Angeles Times</th>
+      <td>0.86</td>
+      <td>656.60</td>
+      <td>5.24</td>
+      <td>-1.38</td>
+      <td>40.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Siena College</th>
+      <td>0.85</td>
+      <td>670.24</td>
+      <td>5.33</td>
+      <td>-0.50</td>
+      <td>42.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Financial Dynamics</th>
+      <td>1.00</td>
+      <td>770.20</td>
+      <td>2.77</td>
+      <td>-1.98</td>
+      <td>15.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Muhlenberg College</th>
+      <td>0.91</td>
+      <td>490.59</td>
+      <td>3.49</td>
+      <td>-1.21</td>
+      <td>22.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Merriman River Group</th>
+      <td>0.81</td>
+      <td>883.86</td>
+      <td>7.68</td>
+      <td>-6.12</td>
+      <td>21.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>We Ask America</th>
+      <td>0.83</td>
+      <td>1112.65</td>
+      <td>6.95</td>
+      <td>-1.75</td>
+      <td>52.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>GfK Group</th>
+      <td>0.92</td>
+      <td>671.16</td>
+      <td>3.40</td>
+      <td>-0.24</td>
+      <td>19.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>McLaughlin &amp; Associates</th>
+      <td>0.84</td>
+      <td>526.32</td>
+      <td>5.68</td>
+      <td>-1.17</td>
+      <td>19.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Blum &amp; Weprin Associates</th>
+      <td>0.94</td>
+      <td>804.17</td>
+      <td>4.56</td>
+      <td>-2.97</td>
+      <td>18.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Franklin &amp; Marshall College</th>
+      <td>0.94</td>
+      <td>493.33</td>
+      <td>5.74</td>
+      <td>-1.14</td>
+      <td>18.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Public Opinion Strategies</th>
+      <td>0.66</td>
+      <td>465.98</td>
+      <td>5.88</td>
+      <td>-3.04</td>
+      <td>53.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Gravis Marketing</th>
+      <td>0.79</td>
+      <td>840.20</td>
+      <td>5.80</td>
+      <td>-2.16</td>
+      <td>55.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>George Washington University (Battleground)</th>
+      <td>0.56</td>
+      <td>975.00</td>
+      <td>3.48</td>
+      <td>-1.94</td>
+      <td>32.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>IBD/TIPP</th>
+      <td>0.76</td>
+      <td>1067.35</td>
+      <td>2.31</td>
+      <td>-2.06</td>
+      <td>17.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>EPIC-MRA</th>
+      <td>0.84</td>
+      <td>512.16</td>
+      <td>5.08</td>
+      <td>-0.63</td>
+      <td>43.00</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>Tarrance Group</th>
+      <td>0.83</td>
+      <td>437.71</td>
+      <td>6.16</td>
+      <td>-1.65</td>
+      <td>24.00</td>
+      <td>D</td>
+    </tr>
+  </tbody>
+</table>
 
 
   <a id="forecast" />
@@ -247,9 +1235,17 @@
 <div class="container" style="margin-top:3%">
 	<div class="row">
 		<p> Bokeh application that connects to some stuff</p>
-		<p>ARIMA, time series, forecasting, etc. This is where all the
-		coding really lies.</p>
+		<form id='input' method='post' action='index'>
+			<p>Please choose an election</p>
+			<select name='election'>
+				<option value='NCGOV2012'>NC Gov 2012</option>
+				<option value='TXSEN2014'>TX Sen 2014</option>
+			</select>
+			<input type="submit" value="Go!" />
+			</p>
+		</form>
 	</div>
+</div>
 <!--
   <div class="container">
     <div class="row">

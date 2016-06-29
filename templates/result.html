@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>All_Elect</title>
+  <meta name="description" content="">
+  <meta name="author" content="Dhruv Mittal">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <!--<link rel="stylesheet" href="/static/css/normalize.css">-->
+  <!--<link rel="stylesheet" href="/static/css/skeleton.css">-->
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/skeleton.css') }}">
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/normalize.css') }}">
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/custom.css') }}">
+
+  <!-- Bokeh
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-0.11.1.min.css" type="text/css" />
+  <script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-0.11.1.min.js"></script>
+  {{b_s_|safe}}
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+  <div class="container">
+	  <section class="header">
+		  <h2 class="title">All_Elect</h2>
+		  <h1>Your simple portal into US elections polling.</h1>
+	  </section>
+  </div>
+  <a id="intro" />
+  	<div class="navbar-spacer" style="margin-top: 10%"></div>
+	<nav class="navbar">
+		<div class="container">	
+			<ul class="navbar-list">
+				<li class="navbar-item">
+				<a class="navbar-link" href="/index#intro"><u>Intro</u></a>
+				</li>
+				<li class="navbar-item">
+					<a class="navbar-link" href="/index#eda">EDA</a>
+				</li>
+				<li class="navbar-item">
+					<a class="navbar-link" href="/index#ranking">Rankings</a>
+				</li>
+				<li class="navbar-item">
+					<a class="navbar-link" href="/index#forecast">Forecast Explorer</a>
+				</li>
+			</ul>
+		</dv>
+	</nav>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			{{b_d_|safe}}
+		</div>
+	</div>
+
+<div class="container" style="margin-top:3%">
+	<div class="row">
+		<p>You're looking at a normalized average of polls and a slight prediction.</p>
+		<form id='input' method='post' action='index'>
+			<p>Please choose an election</p>
+			<select name='election'>
+				<option value='NCGOV2012'>NC Gov 2012</option>
+				<option value='TXSEN2014'>TX Sen 2014</option>
+			</select>
+			<input type="submit" value="Go!" />
+			</p>
+		</form>
+	</div>
+</div>
+
+
+</body>
+</html>
+
+
