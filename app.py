@@ -11,12 +11,15 @@ from bokeh.models import Span
 import helpers
 
 
+
+
 data_settings = {
 'TXSEN2014':{"url":"http://www.realclearpolitics.com/epolls/2014/senate/tx/texas_senate_cornyn_vs_alameel-5011.html",'year':2014, 'name':'Texas Senate 2014'},
 'NCGOV2012':{"url":"http://www.realclearpolitics.com/epolls/2012/governor/nc/north_carolina_governor_mccrory_vs_dalton-2103.html", "year":2012, 'name':'NC Governor 2012'}
         }
 
 app = Flask(__name__)
+
 
 @app.route('/')
 def main():

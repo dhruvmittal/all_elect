@@ -11,3 +11,4 @@ pandas
 bokeh
 SciPy>=0.9
 sklearn
+waitress
