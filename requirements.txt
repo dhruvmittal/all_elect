@@ -9,4 +9,5 @@ simplejson==3.8.0
 numpy
 pandas
 bokeh
+SciPy>=0.9
 sklearn
