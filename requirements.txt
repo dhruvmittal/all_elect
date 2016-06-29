@@ -13,3 +13,4 @@ SciPy>=0.9
 sklearn
 waitress
 lxml
+html5lib
