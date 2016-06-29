@@ -36,6 +36,7 @@ def doSomething():
                     temp_set['year'],
                     datetime.datetime(temp_set['year'],12,31)
                 )
+            print 'spandate', span_date
             helpers.normalize_df(df)
             p = figure(width=800, height=600, x_axis_type="datetime", title=temp_set['name'])
             p.xaxis.axis_label="Date"
@@ -48,7 +49,6 @@ def doSomething():
                 else:
                     color = "green"
                 p.line(df.index, df[name], line_color=color, line_width=3,legend=name) 
-            print 'spandate', span_date
             my_end_span = Span(location=time.mktime(span_date.timetuple())*1000, dimension='height',line_color='purple',
                     line_dash='dashed',line_width=3)
             p.add_layout(my_end_span)

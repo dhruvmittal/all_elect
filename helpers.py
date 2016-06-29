@@ -50,6 +50,7 @@ def CustomAveragePoll(polls, contestant):
     # Fill the holder with the best of the polls.
     # These points should remain in the model at all times.
     # print polls.loc[:,contestant]
+    print '1'
     for date in holder.index:
 #         print ts.loc[date,:]
 #         print ts.loc[date, 'rank'], ts.loc[date, contestant]
@@ -76,6 +77,7 @@ def CustomAveragePoll(polls, contestant):
               time_fill = holder.copy()
               time_fill = time_fill.interpolate(method='time')
 
+    print '2'
     return holder
     
 def next_time_step(time_series, next_time):
@@ -112,8 +114,10 @@ def appropriateRandomStep(time_series, next_time, next_time_value):
 def all_steps(time_series, enddate):
     dates = pd.date_range(start=time_series.index[-1], freq='w', end=enddate)
     added_points = pd.Series(index=dates[1:])
+    i = 0
     for da in added_points.index:
         added_points.loc[da] = next_time_step(time_series.append(added_points.dropna()), da)
+	print 'step', i
     return added_points
     
 def scrape_to_predict(url, year, how_predict, last_poll_date=datetime.datetime.today()):
@@ -123,6 +127,7 @@ def scrape_to_predict(url, year, how_predict, last_poll_date=datetime.datetime.t
                      skiprows=[1,2],
                      tupleize_cols=True)
     df = df[1]
+    print '0'
     df['StartDate'] = df['Date'].apply(lambda x:pd.to_datetime(x.split(' - ')[0] + ' ' + str(year)))
     df['EndDate'] = df['Date'].apply(lambda x:pd.to_datetime(x.split(' - ')[1] + ' ' + str(year)))
     df = df[df['EndDate'] < last_poll_date]
