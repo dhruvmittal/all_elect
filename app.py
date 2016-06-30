@@ -57,7 +57,7 @@ def doSomething():
             p.add_layout(my_end_span)
             script, div = components(p)
             # print script
-            # print df
+	    print 'end of doSomething', df
             return result(request.form['election'], script, div)
         else:
             print 'not a post'

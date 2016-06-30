@@ -130,6 +130,7 @@ def scrape_to_predict(url, year, how_predict, last_poll_date=datetime.datetime.t
     print '0'
     df['StartDate'] = df['Date'].apply(lambda x:pd.to_datetime(x.split(' - ')[0] + ' ' + str(year)))
     df['EndDate'] = df['Date'].apply(lambda x:pd.to_datetime(x.split(' - ')[1] + ' ' + str(year)))
+    print 'stp',df
     df = df[df['EndDate'] < last_poll_date]
     print '00'
     last_poll_used_date = sorted(df['EndDate'].values)[-1].astype('M8[ms]').astype('O')
