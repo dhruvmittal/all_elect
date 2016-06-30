@@ -14,3 +14,4 @@ sklearn
 waitress
 lxml
 html5lib
+bs4
