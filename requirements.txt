@@ -8,7 +8,7 @@ requests>=2.2.1
 simplejson==3.8.0
 numpy
 pandas
-bokeh
+bokeh==0.11.1
 SciPy>=0.9
 sklearn
 waitress

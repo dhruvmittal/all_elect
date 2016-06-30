@@ -58,6 +58,7 @@ def doSomething():
             script, div = components(p)
             # print script
 	    print 'end of doSomething', df
+	    print script, div
             return result(request.form['election'], script, div)
         else:
             print 'not a post'
