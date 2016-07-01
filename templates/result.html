@@ -35,6 +35,29 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="icon" type="image/png" href="images/favicon.png">
 
+
+  <!-- Slider?
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script>
+  $(function() {
+      $( "#slider-range-min" ).slider({
+	    range: "min",
+		  value: 37,
+		min: 1,
+	      max: 700,
+		slide: function( event, ui ) {
+	    $( "#amount" ).val( "$" + ui.value );
+		  }
+	      });
+  $( "#amount" ).val( "$" + $( "#slider-range-min" ).slider( "value" ) );
+    });
+  </script>
+  
+
 </head>
 <body>
 
@@ -83,11 +106,23 @@
 			<select name='election'>
 				<option value='NCGOV2012'>NC Gov 2012</option>
 				<option value='TXSEN2014'>TX Sen 2014</option>
+				<option value='CAGOV2014'>CA Gov 2014</option>
+				<option value='NYGOV2014'>NY Gov 2014</option>
+				<option value='AKGOV2014'>AK Gov 2014</option>
+				<option value='HWGOV2014'>HW Gov 2014</option>
+				<option value='MSSEN2012'>MS Sen 2012</option>
+				<option value='PRES2012'>2012 General</option>
+				<option value='PRES2016'>2016 General</option>
 			</select>
 			<input type="submit" value="Go!" />
 			</p>
 		</form>
-	</div>
+	 </div>
+	 <!--<p>-->
+	   <!--<label for="amount">Maximum price:</label>-->
+	     <!--<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">-->
+	     <!--</p>-->
+	     <!--<div id="slider-range-min"></div>-->
 </div>
 
 

@@ -77,7 +77,7 @@ def CustomAveragePoll(polls, contestant):
               time_fill = holder.copy()
               time_fill = time_fill.interpolate(method='time')
 
-    print '2'
+    # print '2'
     return holder
     
 def next_time_step(time_series, next_time):
@@ -104,9 +104,10 @@ def appropriateRandomStep(time_series, next_time, next_time_value):
     # variance of the actual polling (reduced actual, to be precise)
 
     typical_var = np.std(time_series.values)
-    if next_time_value > time_series.values[-1]:
+    typical_mean = np.mean(time_series.values)
+    if next_time_value > typical_mean:
         return next_time_value -  abs(rm.gauss(0, typical_var))
-    elif next_time_value < time_series.values[-1]:
+    elif next_time_value < typical_mean:
         return next_time_value + abs(rm.gauss(0, typical_var))
     else:
         return rm.gauss(next_time_value, typical_var)
@@ -117,24 +118,26 @@ def all_steps(time_series, enddate):
     i = 0
     for da in added_points.index:
         added_points.loc[da] = next_time_step(time_series.append(added_points.dropna()), da)
-	print 'step', i
+	# print 'step', i
     return added_points
     
-def scrape_to_predict(url, year, how_predict, last_poll_date=datetime.datetime.today()):
+def scrape_to_predict(url, year, how_predict, last_poll_date=datetime.datetime.today(), tabnum=1):
     df = pd.read_html(url,
                       header=0,
                      parse_dates=True,
                      skiprows=[1,2],
                      tupleize_cols=True)
-    df = df[1]
-    print '0'
+    df = df[tabnum]
+    # print '0'
     df['StartDate'] = df['Date'].apply(lambda x:pd.to_datetime(x.split(' - ')[0] + ' ' + str(year)))
     df['EndDate'] = df['Date'].apply(lambda x:pd.to_datetime(x.split(' - ')[1] + ' ' + str(year)))
-    print 'stp',df
+    # print 'stp',df
+    fixYears(df)
+    print df
     df = df[df['EndDate'] < last_poll_date]
-    print '00'
+    # print '00'
     last_poll_used_date = sorted(df['EndDate'].values)[-1].astype('M8[ms]').astype('O')
-    print type(last_poll_used_date)
+    # print type(last_poll_used_date)
     cands = []
     out=pd.DataFrame()
     for e in list(df):
@@ -155,3 +158,12 @@ def normalize_df(df):
         for col in list(df):
             df.loc[d,col] = df.loc[d,col] * 100./s
         
+def fixYears(df):
+	my_current_year = df.iloc[0].loc['EndDate'].year
+	for i in range(1,len(df)):
+		last_month = df.iloc[i-1].loc['EndDate'].month
+		this_month =  df.iloc[i].loc['EndDate'].month
+		this_day = df.iloc[i].loc['EndDate'].day
+		if last_month < this_month and this_month == 12:
+			my_current_year -=1
+		df.iloc[i].loc['EndDate'] = datetime.datetime(my_current_year, this_month, this_day)
