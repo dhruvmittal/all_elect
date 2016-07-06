@@ -100,8 +100,10 @@ def result(election, bk_script, bk_div, first_allowed, last_allowed,
 		current_last = last_allowed
 	if current_first==None:
 		current_first = first_allowed
+        election_len = len(election)
 	return render_template('result.html', election=election, b_s_=bk_script, b_d_=bk_div,
-		    f_a_ = first_allowed, l_a_=last_allowed, c_l_=current_last,c_f_=current_first)
+		    f_a_ = first_allowed, l_a_=last_allowed, c_l_=current_last,c_f_=current_first,
+                    elect_len=election_len)
 
 
 
