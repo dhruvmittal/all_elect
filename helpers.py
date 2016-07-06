@@ -34,13 +34,13 @@ def CustomAveragePoll(polls, contestant):
     # Map the pollster grades onto the polls.
     polls['rank'] = polls['Poll'].map(map_to_rank)
     # Operate on poll data to make it a time indexed series
-    ts = polls[['EndDate', contestant, 'rank']]
+    ts = polls[['FixedDate', contestant, 'rank']]
     # set a criteria for the first set -> Grade A
     grade = 'A'
 
 
     # temp code to drop the duplicate time indices
-    ts = ts.drop_duplicates('EndDate').set_index('EndDate')
+    ts = ts.drop_duplicates('FixedDate').set_index('FixedDate')
 
     # create a holder time series matched to the dates in the original
     holder = pd.Series(index=ts.index)
@@ -50,7 +50,6 @@ def CustomAveragePoll(polls, contestant):
     # Fill the holder with the best of the polls.
     # These points should remain in the model at all times.
     # print polls.loc[:,contestant]
-    print '1'
     for date in holder.index:
 #         print ts.loc[date,:]
 #         print ts.loc[date, 'rank'], ts.loc[date, contestant]
@@ -121,7 +120,8 @@ def all_steps(time_series, enddate):
 	# print 'step', i
     return added_points
     
-def scrape_to_predict(url, year, how_predict, last_poll_date=datetime.datetime.today(), tabnum=1):
+def scrape_to_predict(url, year, how_predict, last_poll_date=datetime.datetime.today(), 
+        first_poll_date=datetime.datetime(1772,11,15), tabnum=1):
     df = pd.read_html(url,
                       header=0,
                      parse_dates=True,
@@ -133,37 +133,47 @@ def scrape_to_predict(url, year, how_predict, last_poll_date=datetime.datetime.t
     df['EndDate'] = df['Date'].apply(lambda x:pd.to_datetime(x.split(' - ')[1] + ' ' + str(year)))
     # print 'stp',df
     fixYears(df)
-    print df
-    df = df[df['EndDate'] < last_poll_date]
+    tmpdates = sorted(df.loc[:,'FixedDate'].values)
+    first_allowed = tmpdates[0].astype('M8[ms]').astype('O')
+    last_allowed = tmpdates[-1].astype('M8[ms]').astype('O')
+    # print df
+    df = df[df['FixedDate'] < last_poll_date]
+    df = df[df['FixedDate'] > first_poll_date]
     # print '00'
-    last_poll_used_date = sorted(df['EndDate'].values)[-1].astype('M8[ms]').astype('O')
+    last_poll_used_date = sorted(df['FixedDate'].values)[-1].astype('M8[ms]').astype('O')
     # print type(last_poll_used_date)
     cands = []
     out=pd.DataFrame()
     for e in list(df):
-        if e.strip() not in ['Poll', 'Date', 'Sample', 'Spread', 'StartDate', 'EndDate', 'MoE']:
+        if e.strip() not in ['Poll', 'Date', 'Sample', 'Spread', 'StartDate', 'EndDate', 'FixedDate', 'MoE']:
             cands.append(e)
     for c in cands:
-        cap = CustomAveragePoll(df.sort_values('EndDate'), c)
+        cap = CustomAveragePoll(df.sort_values('FixedDate'), c)
         predictions = all_steps(cap,how_predict)
         out[c] = cap.append(predictions)
 #         plt.plot(cap)
 #         plt.plot(predictions)
 #     plt.plot(out)
-    return out, last_poll_used_date
+    return out, last_poll_used_date, first_allowed, last_allowed
     
 def normalize_df(df):
     for d in df.index:
         s = sum(df.loc[d])
         for col in list(df):
-            df.loc[d,col] = df.loc[d,col] * 100./s
+            # Note: randint to somewhat account for 'undecided voters'
+            df.loc[d,col] = df.loc[d,col] *rm.randint(87,97)*1./s
         
 def fixYears(df):
-	my_current_year = df.iloc[0].loc['EndDate'].year
-	for i in range(1,len(df)):
-		last_month = df.iloc[i-1].loc['EndDate'].month
-		this_month =  df.iloc[i].loc['EndDate'].month
-		this_day = df.iloc[i].loc['EndDate'].day
-		if last_month < this_month and this_month == 12:
-			my_current_year -=1
-		df.iloc[i].loc['EndDate'] = datetime.datetime(my_current_year, this_month, this_day)
+    old_dates = df.loc[:,'EndDate'].values
+    new_dates = np.empty(old_dates.shape, dtype=datetime.datetime)
+    new_dates[0] = old_dates[0].astype('M8[ms]').astype('O')
+    current_year = old_dates[0].astype('M8[ms]').astype('O').year
+    # print old_dates, new_dates, current_year
+    for i in range(1, len(old_dates)):
+        last_month = new_dates[i-1].month
+        now_date = old_dates[i].astype('M8[ms]').astype('O')
+        # print now_date
+        if now_date.month == 12 and last_month == 1:
+            current_year -=1
+        new_dates[i] = datetime.datetime(current_year, now_date.month, now_date.day)
+    df['FixedDate'] = new_dates

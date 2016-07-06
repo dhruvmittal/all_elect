@@ -41,21 +41,24 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  <link rel="stylesheet" href="/resources/demos/style.css">
+  <!--<link rel="stylesheet" href="/resources/demos/style.css">-->
   <script>
-  $(function() {
-      $( "#slider-range-min" ).slider({
-	    range: "min",
-		  value: 37,
-		min: 1,
-	      max: 700,
+$(function() {
+	$( "#slider-range" ).slider({
+		range: true,
+		min: new Date('{{f_a_}}').getTime() / 1000,
+		max: new Date('{{l_a_}}').getTime() / 1000,
+		step: 86400,
+		values: [ new Date('{{c_f_}}').getTime() / 1000, new Date('{{c_l_}}').getTime() / 1000 ],
 		slide: function( event, ui ) {
-	    $( "#amount" ).val( "$" + ui.value );
-		  }
-	      });
-  $( "#amount" ).val( "$" + $( "#slider-range-min" ).slider( "value" ) );
-    });
+			$( "#amount" ).val( (new Date(ui.values[ 0 ] *1000).toDateString() ) + " - " + (new Date(ui.values[ 1 ] *1000)).toDateString() );
+		}
+	});
+	$( "#amount" ).val( (new Date($( "#slider-range" ).slider( "values", 0 )*1000).toDateString()) +
+	" - " + (new Date($( "#slider-range" ).slider( "values", 1 )*1000)).toDateString());
+});
   </script>
+
   
 
 </head>
@@ -99,10 +102,26 @@
 	</div>
 
 <div class="container" style="margin-top:3%">
+	<div class=row">
+	<form id='datechooser' method='post' action='result'>
+	         <p>
+	       <!--<label for="amount">Date range:</label>-->
+	       <input type="text" name='daterange' id="amount" style="border: 0; color: #f6931f; font-weight: bold;" size="70" readonly/>
+	       <input type="text" name='election' value="{{election}}"  style="border: 0; color: #f6931f; font-weight: bold;" size="20" align='right' readonly/>
+		</p>
+		<div id="slider-range"></div>
+		<br />
+		<input type="submit" value="Go!" />
+	</form>
+	</div>
 	<div class="row">
-		<p>You're looking at a normalized average of polls and a slight prediction.</p>
-		<form id='input' method='post' action='index'>
-			<p>Please choose an election</p>
+		<br />
+		<p>Weighted aggregate model presented to the left of the purple dashed line.
+		On the right, you see a prediction. Move the location of the line by selecting
+		a date range to see how the forecast evolves!
+		</p>
+		<form id='input' method='post' action='result'>
+			<p>Or choose another election</p>
 			<select name='election'>
 				<option value='NCGOV2012'>NC Gov 2012</option>
 				<option value='TXSEN2014'>TX Sen 2014</option>
@@ -118,11 +137,6 @@
 			</p>
 		</form>
 	 </div>
-	 <!--<p>-->
-	   <!--<label for="amount">Maximum price:</label>-->
-	     <!--<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">-->
-	     <!--</p>-->
-	     <!--<div id="slider-range-min"></div>-->
 </div>
 
 
