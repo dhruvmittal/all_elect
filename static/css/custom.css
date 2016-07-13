@@ -1,10 +1,22 @@
 .container {
   max-width: 800px; }
+/*.img {*/
+  /*background-image:url("../images/headpic.png");*/
+  /*background-size: cover;*/
+  /*color:#fff;*/
+  /*}*/
 .header {
   margin-top: 4rem;
   text-align: center;
   margin-bottom: 15rem;
   }
+.footer {
+  margin-top: 4rem;
+  background-color: #000033;
+  /*text-align: center;*/
+  color:#fff;
+}
+
 .value-prop {
   margin-top: 1rem; }
 .value-props {
@@ -250,3 +262,18 @@ cite {
 blockquote cite:before {
 	content: "\2014 \2009";
 }
+/** Icons */
+.icon > svg { display: inline-block; width: 24px; height: 24px; vertical-align: middle; }
+.icon > svg path { fill: #828282; }
+.icon2 > svg { display: inline-block; width: 30px; height: 30px; vertical-align: middle; }
+.icon2 > svg path { fill: #828282; }
+.contact-list, .social-media-list { list-style: none; margin-left: 0;}
+
+.username {color=#fff;text-decoration: none; }
+.username > a {color=#fff;text-decoration: none; }
+.username > a:link {color=#fff;text-decoration: none; }
+.username > a:visited {color=#fff;text-decoration: none; }
+.username {color=#fff;text-decoration:none; }
+a:visited {color=#ffffff;text-decoration: none; }
+a:link {color=#ffffff;text-decoration: none; }
+

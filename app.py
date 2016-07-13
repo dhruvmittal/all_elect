@@ -92,6 +92,10 @@ def doSomething():
 def incorrect_code():
     return render_template('err.html')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 # @app.route('/result/<election>/<polldate>')
 @app.route('/result')
 def result(election, bk_script, bk_div, first_allowed, last_allowed,
