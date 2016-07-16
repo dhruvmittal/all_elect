@@ -1,5 +1,12 @@
 .container {
   max-width: 800px; }
+.widecontainer {
+  max-width: 1200px; 
+  margin: 0 auto;
+  position: relative;
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box; }
 /*.img {*/
   /*background-image:url("../images/headpic.png");*/
   /*background-size: cover;*/

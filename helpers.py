@@ -7,7 +7,8 @@ from sklearn.linear_model import LinearRegression
 import dill
 
 # f = open('/home/vagrant/all_elect/pollster_df.dill','rb')
-f = open('pollster_df.dill','rb')
+# f = open('pollster_df.dill','rb')
+f = open('pollster_df_som.dill','rb')
 aggg = dill.load(f)
 f.close()
 
